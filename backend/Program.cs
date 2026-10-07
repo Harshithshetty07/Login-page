@@ -14,6 +14,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+// Hello
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
