@@ -4,3 +4,61 @@ GET {{AuthApi_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+@host = https://localhost:PORT
+
+### 1. Signup (expect 201)
+POST {{host}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "fullName": "Harshith Shetty",
+  "email": "Harshith@Example.com",
+  "password": "Password123"
+}
+
+### 2. Signup again with the same email (expect 409)
+POST {{host}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "fullName": "Someone Else",
+  "email": "harshith@example.com",
+  "password": "Password123"
+}
+
+### 3. Signup with invalid data (expect 400)
+POST {{host}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "fullName": "A",
+  "email": "not-an-email",
+  "password": "123"
+}
+
+### 4. Login with the correct password (expect 200)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "harshith@example.com",
+  "password": "Password123"
+}
+
+### 5. Login with a wrong password (expect 401)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "harshith@example.com",
+  "password": "WrongPassword"
+}
+
+### 6. Login with an unknown email (expect 401, same message as test 5)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "nobody@example.com",
+  "password": "Password123"
+}
